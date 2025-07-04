@@ -1,0 +1,21 @@
+name: CI
+
+on: [push]
+
+jobs:
+  sast_scan:
+    name: running bandit scan
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install bandit
+      run: pip install pylint
+    - name: Running Bandit scan 
+      run: bandit -r .
